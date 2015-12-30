@@ -1,0 +1,22 @@
+{
+    "name": "javiertelioz/mercadolibre",
+    "description": "Mercado Libre API for laravel",
+    "license": "MIT",
+    "keywords": ["Laravel", "Meli", "MercadoLibre", "MercadoLibre API"],
+    "authors": [
+        {
+            "name": "Javier Telio",
+            "email": "jtelio118@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Javiertelioz\\Mercadolibre\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
