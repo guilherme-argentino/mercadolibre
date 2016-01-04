@@ -2,7 +2,14 @@
 
 namespace Javiertelioz\MercadoLibre;
 
-class Meli {
+use Javiertelioz\MercadoLibre\Utils;
+
+class Meli extends Utils {
+
+    /**
+     * @version 1.0.0
+     */
+    const VERSION  = "1.0.0";
 
     /**
      * Configuration for urls
@@ -49,7 +56,7 @@ class Meli {
      */
     public function getAuthUrl($redirect_uri) {
         $params = array("client_id" => $this->client_id, "response_type" => "code", "redirect_uri" => $redirect_uri);
-        $auth_uri = $this->urls['AUTH_URL']."?".http_build_query($params);
+        $auth_uri = $this->urls['AUTH_URL'] . "?" . http_build_query($params);
         return $auth_uri;
     }
 
@@ -77,7 +84,6 @@ class Meli {
         );
 
         return $this->execute($this->urls['OAUTH_URL'], $opts);
-
     }
     /**
      * Execute a POST Request to create a new AccessToken from a existent refresh_token
