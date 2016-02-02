@@ -25,7 +25,8 @@ class MeliServiceProvider extends ServiceProvider
         // Load Config
         $this->publishes([
             __DIR__  . '/config/mercadolibre.php' => config_path('mercadolibre.php'),
-            __DIR__ . '/views' => base_path('resources/views/mercadolibre')
+            __DIR__ . '/views' => base_path('resources/views/mercadolibre'),
+            __DIR__ . '/migrations' => base_path('database/migrations')
             ]);
 
         $this->client_id     = config('mercadolibre.client_id');
@@ -41,14 +42,16 @@ class MeliServiceProvider extends ServiceProvider
      */
     public function register()
     {
-         // Register Facade
+        // Register Facade
         $this->app->singleton('meli', function () {
             return new Meli($this->client_id, $this->client_secret, $this->urls, $this->curl_opts);
         });
-        /*$meli = new Meli($this->client_id, $this->client_secret, $this->urls, $this->curl_opts);
-        $this->app->instance('Meli', $meli);*/
 
         include __DIR__. '/routes.php';
-        $this->app->make('Javiertelioz\MercadoLibre\MeliController');
+        $this->app->make('Javiertelioz\MercadoLibre\Controllers\MeliController');
+        $this->app->make('Javiertelioz\MercadoLibre\Controllers\OrderController');
+        $this->app->make('Javiertelioz\MercadoLibre\Controllers\ProductController');
+        $this->app->make('Javiertelioz\MercadoLibre\Controllers\QuestionController');
+        $this->app->make('Javiertelioz\MercadoLibre\Controllers\StoreController');
     }
 }

@@ -17,16 +17,30 @@
       }
       .container {
       text-align: center;
-      display: table-cell;
       vertical-align: middle;
       }
       .content {
       text-align: center;
       display: inline-block;
       }
+      .content-btn{
+        display: block;
+        padding: 30px 0;
+      }
       .title {
       font-size: 66px;
-      padding: 100px 50px;
+      padding: 30px 50px;
+      }
+      .errors {
+        text-align: left;
+        color: red;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 0 10px;
+      }
+      .errors span {
+        font-size: 16px;
+        color: black;
       }
       .btn {
       background: #3498db;
@@ -59,7 +73,16 @@
     <div class="container">
       <div class="content">
         <div class="title">Mercado Libre - Laravel</div>
-        <a class="btn" href="{!! $auth_url !!}">Login to Mercadolibre</a>
+        @if(isset($auth['error']))
+        <div class="errors">
+          <h2>Errors</h2>
+          <p><span>Error_code:</span> {!! $auth['error'] !!}</p>
+          <p><span>Description:</span> {!! $auth['description'] !!}</p>
+        </div>
+        @endif
+        <div class="content-btn">
+          <a class="btn" href="{!! $auth['url'] !!}">Login to Mercadolibre</a>
+        </div>
       </div>
     </div>
   </body>
