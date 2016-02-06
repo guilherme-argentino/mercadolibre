@@ -48,5 +48,62 @@
     <!-- Custom Theme JavaScript -->
     <script src="{{ asset('../mercadolibre/dist/js/sb-admin-2.js') }}"></script>
     @yield('script')
+    <script>
+    function get_time_diff( datetime ) {
+        var datetime = typeof datetime !== 'undefined' ? datetime : "2014-01-01 01:02:03.123456";
+        var datetime = new Date( datetime ).getTime();
+        var now = new Date().getTime();
+        
+        if(isNaN(datetime)) {
+            return "";
+        }
+        if (datetime < now) {
+            var milisec_diff = now - datetime;
+        } else {
+            var milisec_diff = datetime - now;
+        }
+        var days = Math.floor(milisec_diff / 1000 / 60 / (60 * 24));
+        var date_diff = new Date( milisec_diff );
+
+        if(days > 0) {
+            return days + " Days ago";
+        }
+
+        if(date_diff.getHours() > 0) {
+            return date_diff.getHours() + " Hours ago";
+        }
+
+        if(date_diff.getMinutes() > 0) {
+            return date_diff.getMinutes() + " Minutes ago";
+        }
+        
+        if(date_diff.getSeconds() > 0) {
+            return date_diff.getSeconds() + " Seconds ago";
+        }
+    }
+    function LoadFinance() {
+        $(function() {
+            var html = '';
+            $.get( "{{ url('/meli/admin/get_notifications') }}", function(notifications) {
+                if(notifications.length) {
+                    $.each(notifications, function( k, notification ) {
+
+                        var icon = '<i class="fa fa-comment fa-fw"></i>';
+                        var time = notification.received;
+
+                        html += '<li><a href="'+ notification.resource +'">' +
+                            '<div>' + icon + ' New Order <span class="pull-right text-muted small">' + get_time_diff(time)  +'</span></div></a></li>'
+                            + '<li class="divider"></li>';
+                    });
+                } else {
+                    html = '<li><a href="#"><div>No notifications<span class="pull-right text-muted small"></span></div></a></li>';
+                }
+                $( "#notifications" ).empty().html( html );
+            });
+        });
+    }
+
+    setInterval( LoadFinance, 30000 );
+    </script>
   </body>
 </html>

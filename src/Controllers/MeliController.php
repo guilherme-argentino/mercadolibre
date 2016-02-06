@@ -5,6 +5,7 @@ namespace Javiertelioz\MercadoLibre\Controllers;
 use Illuminate\Http\Request;
 use Petsy\Http\Controllers\Controller;
 use Javiertelioz\MercadoLibre\Models\Topics;
+use Javiertelioz\MercadoLibre\Models\Notifications;
 
 class MeliController extends Controller
 {
@@ -97,5 +98,14 @@ class MeliController extends Controller
 			file_put_contents($path . $file, $notification . PHP_EOL, FILE_APPEND);
             new Topics(json_decode($notification));
 		}
+    }
+
+    public function getNotifications() {
+        $notifications = Notifications::where('is_view', 0)
+            ->orderBy('received', 'desc')
+            ->take(15)
+            ->get();
+
+        return response()->json($notifications);
     }
 }

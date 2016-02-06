@@ -22,6 +22,7 @@ class MercadolibreNotificationsTable extends Migration
             $table->string('application_id');
             $table->smallInteger('attempts');
             $table->smallInteger('status');
+            $table->smallInteger('is_view');
             $table->dateTime('sent');
             $table->dateTime('received');
         });
