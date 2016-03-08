@@ -1,12 +1,10 @@
 @extends('mercadolibre::layout.angular')
 @section('title', 'Dashboard')
 @section('content')
-<!-- BEGIN PAGE HEADER-->
-<!-- BEGIN PAGE BAR -->
 <div class="page-bar">
   <ul class="page-breadcrumb">
     <li>
-      <a href="index.html">Home</a>
+      <a href="{{ url('/meli/admin') }}">Home</a>
       <i class="fa fa-circle"></i>
     </li>
     <li>
@@ -21,12 +19,7 @@
     </div>
   </div>
 </div>
-<!-- END PAGE BAR -->
-<!-- BEGIN PAGE TITLE-->
 <h3 class="page-title"> Dashboard</h3>
-<!-- END PAGE TITLE-->
-<!-- END PAGE HEADER-->
-<!-- BEGIN DASHBOARD STATS 1-->
 <div class="row">
   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="dashboard-stat blue">

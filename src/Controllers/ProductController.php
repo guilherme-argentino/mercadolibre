@@ -48,7 +48,7 @@ class ProductController extends Controller {
 				//dd($products);die;
 				$this->_result['data'][] = [
 					'<input type="checkbox" name="id[]" value="'.  $product->id .'">',
-					'<a href="'. $product->permalink . '">'. $product->id .'</a>',
+					'<a href="'. $product->permalink . '" target="_blank">'. $product->id .'</a>',
 					$product->title,
 					$product->category_id,
 					'$' . number_format($product->price, 2),
@@ -56,7 +56,7 @@ class ProductController extends Controller {
 					$product->sold_quantity,
 					date('Y-m-d H:i', strtotime($product->stop_time)),
 					'<img src="' . $product->thumbnail . '">',
-					'<a href="'. url('/meli/admin/product', ['id'=> $product->id]) . '" class="btn btn-sm btn-circle btn-default btn-editable"><i class="fa fa-search"></i> View</a>',
+					'<a href="'. url('/meli/admin/product', ['id'=> $product->id]) . '" class="btn btn-sm btn-circle btn-default btn-editable"><i class="fa fa-edit"></i> Edit</a>',
 				];
 			}
 		} else {
@@ -88,8 +88,9 @@ class ProductController extends Controller {
 			'access_token' => session('access_token'),
 		]);
 		
-		echo '<pre>';
-		var_dump($product['body']);die;
+		
+		//echo '<pre>';
+		//var_dump($product['body']);die;
 
 		$this->_result = $product['body'];
 

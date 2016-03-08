@@ -36,4 +36,8 @@ Route::group(['prefix' => 'meli' ], function () {
     // Stores Controllers
     Route::get('/admin/stores', 'Javiertelioz\MercadoLibre\Controllers\StoreController@showall');
     Route::get('/admin/store/{id}', 'Javiertelioz\MercadoLibre\Controllers\StoreController@show');
+
+    // Stores Controllers
+    Route::get('/admin/task', 'Javiertelioz\MercadoLibre\Controllers\TaskController@showall');
+    Route::get('/admin/task/{id}', 'Javiertelioz\MercadoLibre\Controllers\TaskController@show');
 });

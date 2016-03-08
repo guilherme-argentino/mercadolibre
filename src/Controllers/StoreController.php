@@ -63,6 +63,8 @@ class StoreController extends Controller {
 			'_store' =>$store['body'],
 			'_categories' => $categories
 		];
+		//echo '<pre>';
+		//var_dump($this->_result);die;
 		
 		return view('mercadolibre::admin.stores.details')->with('data', $this->_result);
     }

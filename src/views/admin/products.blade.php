@@ -19,6 +19,10 @@
   <div class="col-md-12">
     <div class="portlet ">
       <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-basket"></i>
+          <span class="caption-subject sbold uppercase"> Product Listing </span>
+        </div>
         <div class="actions">
           <div class="btn-group">
             <a class="btn btn-circle btn-default dropdown-toggle" href="javascript:;" data-toggle="dropdown">

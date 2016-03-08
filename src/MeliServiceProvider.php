@@ -53,5 +53,6 @@ class MeliServiceProvider extends ServiceProvider
         $this->app->make('Javiertelioz\MercadoLibre\Controllers\ProductController');
         $this->app->make('Javiertelioz\MercadoLibre\Controllers\QuestionController');
         $this->app->make('Javiertelioz\MercadoLibre\Controllers\StoreController');
+        $this->app->make('Javiertelioz\MercadoLibre\Controllers\TaskController');
     }
 }

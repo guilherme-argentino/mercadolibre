@@ -21,12 +21,12 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
       <div class="portlet-title">
         <div class="caption">
-          <i class="icon-settings font-green"></i>
-          <span class="caption-subject font-green sbold uppercase"> Order Listing </span>
+          <i class="icon-basket"></i>
+          <span class="caption-subject sbold uppercase"> Order Listing </span>
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a class="btn btn-transparent btn-circle" href="javascript:;" data-toggle="dropdown">
+            <a class="btn btn-circle btn-default dropdown-toggle" href="javascript:;" data-toggle="dropdown">
               <span class="hidden-xs"> Tools </span><i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu pull-right">

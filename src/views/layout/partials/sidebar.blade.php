@@ -53,7 +53,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="javascript:;" class="nav-link nav-toggle">
+        <a href="{{ url('/meli/admin/task') }}" class="nav-link nav-toggle">
           <i class="icon-rocket"></i><span class="title">Task</span>
         </a>
       </li>

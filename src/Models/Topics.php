@@ -58,7 +58,7 @@ class Topics {
     			if($classModel == 'Orders'){
     				$topicModel = new Order($topic);
                     $this->topics->process = $topicModel->send();
-                    var_dump($this->topics->process);//die;
+                    //var_dump($this->topics->process);die;
     			} else if($classModel == 'Questions') {
     				$topicModel = new Question($topic);
                     $this->topics->process = $topicModel->send();
