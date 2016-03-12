@@ -31,20 +31,28 @@ class Order extends Model implements Topic {
 
 	public function send() {
 		// Send Order in Magento
-		$emilia = \Emilia::call("mercadolibre_order.create", [
+		$emilia = \Emilia::call("meli_order.create", [
 			'order' => $this->order
 		]);
+		var_dump($emilia);die;
 		return $emilia;
 	}
 
 	public function get() {
+		
+		$_firstname = isset($this->source->buyer->first_name) ? trim($this->source->buyer->first_name)  : 'First Name';
+		$_lastname = isset($this->source->buyer->last_name) ?trim($this->source->buyer->last_name): 'Last Name';
+		$_email = isset($this->source->buyer->email) ? strtolower(trim($this->source->buyer->email)) : 'customer@mercadolibre.com.mx';
+		$_phone = isset($this->source->buyer->phone->number) ? $this->source->buyer->phone->number : '55-55-55-55';
+		$_fax = !empty($this->source->buyer->alternative_phone->number) ? $this->source->buyer->alternative_phone->number : '';
+		
 		// set Ordes Status
 		$this->order['status'] = $this->source->status;
 		//Set Customer
 		$this->order['customer'] = [
-			'firstname' => trim($this->source->buyer->first_name),
-			'lastname' => trim($this->source->buyer->last_name),
-			'email' => strtolower(trim($this->source->buyer->email)),
+			'firstname' => $_firstname,
+			'lastname' => $_lastname,
+			'email' => $_email,
 			'website_id' => 1,
 			'group_id' => 1,
 			'store_id' => 1,
@@ -64,13 +72,10 @@ class Order extends Model implements Topic {
 		}
 		$this->order['products'] = $this->products;
 		// Set Shipping Address
-		$phone = $this->source->buyer->phone->number;
-		$fax = !empty($this->source->buyer->alternative_phone->number) ? $this->source->buyer->alternative_phone->number : '';
-
 		$this->order['address']['shipping'] = [
 			'mode' => 'shipping',
-			'firstname' => trim($this->source->buyer->first_name),
-			'lastname' => trim($this->source->buyer->last_name),
+			'firstname' => $_firstname,
+			'lastname' => $_lastname,
 			'company' => '',
 			'street' => !empty($this->source->shipping->receiver_address->street_name) ?  trim($this->source->shipping->receiver_address->street_name) : '',
 			'city' => !empty($this->source->shipping->receiver_address->city->name) ? $this->source->shipping->receiver_address->city->name : '',
@@ -79,8 +84,8 @@ class Order extends Model implements Topic {
 			'colony' => !empty($this->source->shipping->receiver_address->neighborhood->name) ? $this->source->shipping->receiver_address->neighborhood->name : '',
 			'municipality' => !empty($this->source->shipping->receiver_address->municipality->name) ? $this->source->shipping->receiver_address->municipality->name : '',
 			'country_id' => !empty($this->source->shipping->receiver_address->country->id) ? $this->source->shipping->receiver_address->country->id : 'MX',
-			'telephone' => !empty($phone) ? $phone : '',
-			'fax' => !empty($fax) ? $fax : '',
+			'telephone' => !empty($_phone) ? $_phone : '',
+			'fax' => !empty($_fax) ? $_fax : '',
 			'street_number' => !empty($this->source->shipping->receiver_address->street_number) ? $this->source->shipping->receiver_address->street_number : '',
 			//'inside_number' => !empty(var) ? : '',
 			'referencias' => !empty($this->source->shipping->receiver_address->comment) ? $this->source->shipping->receiver_address->comment : '',
