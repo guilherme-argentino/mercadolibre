@@ -50,6 +50,14 @@ class Topics {
      * Process all Topic's (items, payments, questions, orders)
      */
     private function _processTopic() {
+
+        $notifications = new Notifications();
+        $exist = $notifications->where('resource', '=', $this->topics->resource)->count();
+
+        if($exist) {
+            return;
+        }
+        
     	$classModel = ucfirst($this->topics->topic);
     	
         if(isset($this->topics->resource)) {
@@ -62,6 +70,9 @@ class Topics {
     			} else if($classModel == 'Questions') {
     				$topicModel = new Question($topic);
                     $this->topics->process = $topicModel->send();
+                    if($this->topics->process == null){
+                        return;
+                    }
     			} else if($classModel == 'Items') {
     				$topicModel = new Item($topic);
                     $this->topics->process = $topicModel->send();
@@ -77,8 +88,7 @@ class Topics {
     	} else {
     		$this->topics->process = false;
     	}
-        // Save Data to notifications
-        $notifications = new Notifications();
+
         $notifications->saveNotification($this->topics);
     }
 

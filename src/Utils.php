@@ -35,15 +35,31 @@ class Utils
 	 * @return array
 	 */
 	public function getTokenByConsole() {
+		$token = $this->_getFileToken();
 
+		if(!$token) {
+			return $this->_getToken();
+		}
+
+		if(isset($token['expires_in']) && $token['expires_in'] < time()) {
+			return $this->_getToken();
+		} else {
+			return $this->_getFileToken();
+		}
+	}
+
+	private function _getToken(){
 		$params = http_build_query([
 			'grant_type' => 'client_credentials',
 			'client_id' => $this->client_id,
 			'client_secret' => $this->client_secret,
 			]);
-
+		
 		$comand = exec('curl -X POST -H "accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" "https://api.mercadolibre.com/oauth/token?' . $params .'"' , $result);
-		$this->_saveToken($result[0]);
+		$_token = json_decode($comand);
+		$_token->expires_in = time() + $_token->expires_in;
+		$this->_saveToken(json_encode($_token));
+		
 		return $this->_getFileToken();
 	}
 	/**

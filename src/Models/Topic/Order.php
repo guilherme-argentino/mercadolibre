@@ -30,12 +30,16 @@ class Order extends Model implements Topic {
 	}
 
 	public function send() {
-		// Send Order in Magento
-		$emilia = \Emilia::call("meli_order.create", [
-			'order' => $this->order
-		]);
-		var_dump($emilia);die;
-		return $emilia;
+
+		$status = $this->source->payments[0]->status;
+		$status_detail = $this->source->payments[0]->status_detail;
+		
+		if($status == 'approved' && $status_detail == 'accredited') {
+			$emilia = \Emilia::call("meli_order.create", [
+				'order' => $this->order
+				]);
+			return $emilia;
+		}
 	}
 
 	public function get() {
@@ -45,6 +49,10 @@ class Order extends Model implements Topic {
 		$_email = isset($this->source->buyer->email) ? strtolower(trim($this->source->buyer->email)) : 'customer@mercadolibre.com.mx';
 		$_phone = isset($this->source->buyer->phone->number) ? $this->source->buyer->phone->number : '55-55-55-55';
 		$_fax = !empty($this->source->buyer->alternative_phone->number) ? $this->source->buyer->alternative_phone->number : '';
+
+		//Order Id Mercado Libre
+
+		$this->order['order_id'] = $this->source->id;
 		
 		// set Ordes Status
 		$this->order['status'] = $this->source->status;
@@ -77,9 +85,9 @@ class Order extends Model implements Topic {
 			'firstname' => $_firstname,
 			'lastname' => $_lastname,
 			'company' => '',
-			'street' => !empty($this->source->shipping->receiver_address->street_name) ?  trim($this->source->shipping->receiver_address->street_name) : '',
-			'city' => !empty($this->source->shipping->receiver_address->city->name) ? $this->source->shipping->receiver_address->city->name : '',
-			'region' => !empty($this->source->shipping->receiver_address->state->name) ? $this->source->shipping->receiver_address->state->name : '',
+			'street' => !empty($this->source->shipping->receiver_address->street_name) ?  trim($this->source->shipping->receiver_address->street_name) : 'Please contact buyer ' . $_email,
+			'city' => !empty($this->source->shipping->receiver_address->city->name) ? $this->source->shipping->receiver_address->city->name : 'Mexico',
+			'region' => !empty($this->source->shipping->receiver_address->state->name) ? $this->source->shipping->receiver_address->state->name : 'Please contact buyer ' . $_email,
 			'postcode' => !empty($this->source->shipping->receiver_address->zip_code) ? $this->source->shipping->receiver_address->zip_code : '',
 			'colony' => !empty($this->source->shipping->receiver_address->neighborhood->name) ? $this->source->shipping->receiver_address->neighborhood->name : '',
 			'municipality' => !empty($this->source->shipping->receiver_address->municipality->name) ? $this->source->shipping->receiver_address->municipality->name : '',
