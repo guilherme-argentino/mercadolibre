@@ -9,7 +9,7 @@ Run composer requre:
 $ composer require javiertelioz/mercadolibre
 ```
 
-Add to config/app.php the service provider
+Add to config/app.php the service provider and alias
 
 ```php
     'providers' => [
@@ -18,6 +18,12 @@ Add to config/app.php the service provider
          * Other Providers...
          */
         Javiertelioz\MercadoLibre\MeliServiceProvider::class,
+    ],
+    
+    'aliases' => [
+
+        'Meli' => Javiertelioz\MercadoLibre\Facades\Meli::class,
+
     ],
 ```
 
