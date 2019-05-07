@@ -3,7 +3,7 @@
 namespace Javiertelioz\MercadoLibre\Controllers;
 
 use Illuminate\Http\Request;
-use Petsy\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Javiertelioz\MercadoLibre\Models\Order;
 
 class TaskController extends Controller {
