@@ -27,4 +27,10 @@ Add to config/app.php the service provider and alias
     ],
 ```
 
+Now, publish configurations, views and migrations
+
+```shell
+$ php artisan vendor:publish --provider="Javiertelioz\MercadoLibre\MeliServiceProvider"
+```
+
 To be continued ...
