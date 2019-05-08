@@ -33,4 +33,16 @@ Now, publish configurations, views and migrations
 $ php artisan vendor:publish --provider="Javiertelioz\MercadoLibre\MeliServiceProvider"
 ```
 
+# Configure
+
+Add the following lines to your .env file:
+
+```
+ML_APP_ID=<YOURID>
+ML_APP_SECRET=<YOURSECRET>
+ML_AUTHENTICATION_URL=https://<YOURHOST>/meli/callback
+```
+
+You can obtain your application ID and secret [here](https://developers.mercadolibre.com/).
+
 To be continued ...
