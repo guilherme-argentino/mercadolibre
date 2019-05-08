@@ -3,6 +3,7 @@
 namespace Javiertelioz\MercadoLibre\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Javiertelioz\MercadoLibre\Models\Topics;
 use Javiertelioz\MercadoLibre\Models\Notifications;
@@ -45,11 +46,15 @@ class MeliController extends Controller
         if($code || $access_token ) {
 			if($code && !($access_token)) {
                 $user = \Meli::authorize($code, env('ML_AUTHENTICATION_URL'));
+
+                Log::debug('User data: ' . print_r($user, true));
 				
                 session(['access_token' => $user['body']->access_token]);
 				session(['expires_in' => time() + $user['body']->expires_in]);
 				session(['refresh_token' => $user['body']->refresh_token]);
-				$me = \Meli::get('/users/me', ['access_token' => session('access_token')]);
+                $me = \Meli::get('/users/me', ['access_token' => session('access_token')]);
+                
+                Log::debug('Meli ME: ' . print_r($me, true));
 				session(['profile' => $me['body']]);
 			} else {
 				if(session('expires_in') < time()) {
@@ -62,7 +67,8 @@ class MeliController extends Controller
 						echo "Exception: " . $e->getMessage() . PHP_EOL;
 					}
 				}
-			}
+            }
+            Log::debug('Session data: ' . print_r($request->session()->all(), true));
 			return \Redirect::to('/meli/admin');
 		} else {
 			$auth_url = \Meli::getAuthUrl(env('ML_AUTHENTICATION_URL', ''));
@@ -70,11 +76,11 @@ class MeliController extends Controller
 		}
     }
 
-    public function admin() {
+    public function admin(Request $request) {
+        Log::debug('Session data: ' . print_r($request->session()->all(), true));
+        Log::debug('Session :: Meli ME: ' . print_r(session('profile'), true));
+        Log::debug('Session :: Access Token: ' . print_r(session('access_token'), true));
         if(session('profile')) {
-            /*echo '<pre>';
-            dd(session('profile'));
-            echo '</pre>';*/
             return view('mercadolibre::admin.dashboard')
                 ->with('profile', session('profile'));
         }

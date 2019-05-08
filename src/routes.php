@@ -2,7 +2,7 @@
 /**
  * Routers Mercado Libre (Meli)
  */
-Route::group(['prefix' => 'meli' ], function () {
+Route::group(['prefix' => 'meli', 'middleware' => ['web'] ], function () {
 	// Login Page
 	Route::get('/login', 'Javiertelioz\MercadoLibre\Controllers\MeliController@login');
     // Logout Page
