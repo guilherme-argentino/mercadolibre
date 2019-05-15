@@ -25,7 +25,7 @@ class MeliServiceProvider extends ServiceProvider
         // Load Config
         $this->publishes([
             __DIR__  . '/config/mercadolibre.php' => config_path('mercadolibre.php'),
-            __DIR__ . '/views' => base_path('resources/views/mercadolibre'),
+            __DIR__ . '/views' => base_path('resources/views/vendor/mercadolibre'),
             __DIR__ . '/migrations' => base_path('database/migrations')
             ]);
 
